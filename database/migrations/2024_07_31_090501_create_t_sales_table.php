@@ -24,6 +24,8 @@ class CreateTSalesTable extends Migration
             $table->decimal('total_bayar');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('cust_id')->references('id')->on('m_customer');
         });
     }
 

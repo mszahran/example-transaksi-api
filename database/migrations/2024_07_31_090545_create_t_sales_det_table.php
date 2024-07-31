@@ -15,6 +15,7 @@ class CreateTSalesDetTable extends Migration
     {
         Schema::create('t_sales_det', function (Blueprint $table) {
             $table->id();
+            $table->integer('sales_id');
             $table->integer('barang_id');
             $table->decimal('harga_bandrol');
             $table->integer('qty');
@@ -24,6 +25,9 @@ class CreateTSalesDetTable extends Migration
             $table->decimal('total');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('sales_id')->references('id')->on('t_sales');
+            $table->foreign('barang_id')->references('id')->on('m_barang');
         });
     }
 
