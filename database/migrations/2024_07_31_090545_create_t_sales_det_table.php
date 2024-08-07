@@ -17,11 +17,11 @@ class CreateTSalesDetTable extends Migration
             $table->id();
             $table->integer('sales_id');
             $table->integer('barang_id');
-            $table->decimal('harga_bandrol');
-            $table->integer('qty');
-            $table->decimal('diskon_pct');
-            $table->decimal('diskon_nilai');
-            $table->decimal('harga_diskon');
+            $table->decimal('harga_bandrol', '32');
+            $table->decimal('qty', '32');
+            $table->decimal('diskon_pct', '32');
+            $table->decimal('diskon_nilai', '32');
+            $table->decimal('harga_diskon', '32');
             $table->decimal('total');
             $table->timestamps();
             $table->softDeletes();

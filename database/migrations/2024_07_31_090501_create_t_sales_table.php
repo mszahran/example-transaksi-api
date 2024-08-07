@@ -18,10 +18,10 @@ class CreateTSalesTable extends Migration
             $table->string('kode', 15);
             $table->dateTime('tgl');
             $table->integer('cust_id');
-            $table->decimal('subtotal');
-            $table->decimal('diskon');
-            $table->decimal('ongkir');
-            $table->decimal('total_bayar');
+            $table->decimal('subtotal', '32')->nullable();
+            $table->decimal('diskon', '32')->nullable();
+            $table->decimal('ongkir', '32')->nullable();
+            $table->decimal('total_bayar', '32')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
