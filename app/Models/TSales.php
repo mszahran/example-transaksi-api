@@ -20,8 +20,13 @@ class TSales extends Model
         "total_bayar"
     ];
 
-    public function customer()
+    public function Customer()
     {
         return $this->hasOne(MCustomer::class, 'id', 'cust_id');
+    }
+
+    public function T_sales_det()
+    {
+        return $this->hasMany(TSalesDet::class, 'sales_id', 'id');
     }
 }

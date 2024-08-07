@@ -36,7 +36,8 @@ class Transaksi extends Controller
     {
         try {
             // Ambil data transaksi
-            $transactions = TSalesModel::with('customer')
+            $transactions = TSalesModel::with(['Customer', 'T_sales_det'])
+                ->withCount('T_sales_det')
                 ->whereNotNull('cust_id')
                 ->get();
 
