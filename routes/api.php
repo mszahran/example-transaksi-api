@@ -38,6 +38,7 @@ Route::prefix('v1/')->group(function () {
             Route::delete('cancel/{kodeSales}', [App\Http\Controllers\Transaksi::class, "cancelTransaksi"]);
             Route::prefix('barang-transaksi/')->group(function () {
                 Route::post('create', [App\Http\Controllers\Transaksi::class, "createBarangTransaksi"]);
+                Route::put('update', [App\Http\Controllers\Transaksi::class, "updateBarangTransaksi"]);
                 Route::get('list/{kodeTransaksi}', [App\Http\Controllers\Transaksi::class, "listBarangTransaksi"]);
                 Route::get('detail/{idSalesDet}', [App\Http\Controllers\Transaksi::class, "detailBarangTransaksi"]);
                 Route::delete('delete/{idSalesDet}', [App\Http\Controllers\Transaksi::class, "deleteBarangTransaksi"]);

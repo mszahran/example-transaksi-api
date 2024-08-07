@@ -165,6 +165,43 @@ class Transaksi extends Controller
         }
     }
 
+    public function updateBarangTransaksi(Request $request)
+    {
+        try {
+            $detailBarang = MBarangModel::where('kode', $request->input('kode_barang'))
+                ->first();
+
+            $rumusDiskon = $detailBarang->harga * ($request->input('diskon_pct') / 100);
+            $hasilDiskon = $detailBarang->harga - $rumusDiskon;
+
+            $dataBarangTransaksi = [
+                'barang_id' => $detailBarang->id,
+                'harga_bandrol' => $detailBarang->harga,
+                'qty' => $request->input('qty'),
+                'diskon_pct' => $request->input('diskon_pct'),
+                'diskon_nilai' => $rumusDiskon,
+                'harga_diskon' => $hasilDiskon,
+                'total' => $hasilDiskon * $request->input('qty')
+            ];
+
+            TSalesDetModel::where('id', $request->input('id'))
+                ->update($dataBarangTransaksi);
+
+            $data = [
+                'message' => 'Successfully update transaction data.',
+                'data' => $dataBarangTransaksi
+            ];
+
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'message' => 'An error occurred while update transaction.',
+                    'error' => $e->getMessage()
+                ], 500);
+        }
+    }
+
     public function saveTransaksi(Request $request)
     {
         try {
