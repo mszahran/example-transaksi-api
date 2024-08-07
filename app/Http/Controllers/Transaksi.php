@@ -269,7 +269,7 @@ class Transaksi extends Controller
     public function detailBarangTransaksi($idSalesDet = NULL)
     {
         try {
-            $detailBarangTransaksi = TSalesDetModel::find($idSalesDet);
+            $detailBarangTransaksi = TSalesDetModel::with('M_barang')->find($idSalesDet);
 
             $data = [
                 'message' => 'Successfully fetching item transaction data.',
