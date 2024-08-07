@@ -1,64 +1,142 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+```markdown
+# Proyek Laravel dengan JWT
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Deskripsi
 
-## About Laravel
+Ini adalah proyek Laravel yang menyediakan fitur otentikasi menggunakan JSON Web Tokens (JWT). Proyek ini dirancang untuk memberikan akses aman ke API dengan menggunakan token JWT.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Prerequisites
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Sebelum Anda mulai, pastikan Anda memiliki perangkat lunak berikut yang terpasang:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.3 atau versi lebih baru
+- Composer
+- PostgreSQL
+- Nginx
 
-## Learning Laravel
+## Clone Repository
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Untuk menarik proyek dari GitHub, ikuti langkah-langkah berikut:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone repository**
 
-## Laravel Sponsors
+   ```bash
+   git clone https://github.com/username/repository.git
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Gantilah `username` dan `repository` dengan nama pengguna GitHub dan nama repository yang sesuai.
 
-### Premium Partners
+2. **Masuk ke direktori proyek**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+   ```bash
+   cd repository
+   ```
 
-## Contributing
+## Setup Proyek
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. **Install dependencies**
 
-## Code of Conduct
+   Pastikan Composer sudah terinstal, kemudian jalankan perintah berikut untuk menginstal semua dependensi:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+   ```bash
+   composer install
+   ```
 
-## Security Vulnerabilities
+2. **Salin file `.env.example` ke `.env`**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   ```bash
+   cp .env.example .env
+   ```
 
-## License
+3. **Generate kunci aplikasi**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+   ```bash
+   php artisan key:generate
+   ```
+
+4. **Konfigurasi JWT**
+
+   Install paket JWT dengan Composer:
+
+   ```bash
+   composer require tymon/jwt-auth
+   ```
+
+   Publikasikan file konfigurasi JWT:
+
+   ```bash
+   php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+   ```
+
+   Tambahkan kunci JWT ke file `.env`:
+
+   ```env
+   JWT_SECRET=your_jwt_secret_key
+   ```
+
+   Generate kunci JWT:
+
+   ```bash
+   php artisan jwt:secret
+   ```
+
+5. **Konfigurasi lingkungan**
+
+   Edit file `.env` sesuai kebutuhan Anda. Pastikan Anda mengkonfigurasi database dan pengaturan lainnya sesuai dengan lingkungan pengembangan atau produksi Anda.
+
+6. **Migrasi database**
+
+   Jalankan perintah berikut untuk menjalankan migrasi database:
+
+   ```bash
+   php artisan migrate
+   ```
+
+7. **Jalankan seeder (opsional)**
+
+   Jika ada data awal yang perlu dimasukkan ke database, jalankan perintah berikut:
+
+   ```bash
+   php artisan db:seed
+   ```
+
+## Menjalankan Proyek
+
+Setelah setup selesai, Anda bisa menjalankan server lokal menggunakan perintah berikut:
+
+```bash
+php artisan serve
+```
+
+Proyek akan tersedia di `http://localhost:8000`.
+
+## Otentikasi JWT
+
+Untuk menggunakan JWT dalam proyek ini:
+
+1. **Mendaftar**
+
+   Kirim permintaan POST ke endpoint `/api/register` dengan data pengguna. Setelah pendaftaran, Anda akan mendapatkan token JWT.
+
+2. **Masuk**
+
+   Kirim permintaan POST ke endpoint `/api/login` dengan kredensial pengguna. Anda akan menerima token JWT yang dapat digunakan untuk mengakses endpoint yang dilindungi.
+
+3. **Akses Endpoint yang Dilindungi**
+
+   Sertakan token JWT dalam header `Authorization` sebagai `Bearer {{token}}` untuk mengakses endpoint yang memerlukan otentikasi.
+
+## Kontribusi
+
+Jika Anda ingin berkontribusi pada proyek ini, silakan ikuti pedoman kontribusi yang terdapat di [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Lisensi
+
+Proyek ini dilisensikan di bawah [Lisensi MIT](LICENSE).
+
+## Kontak
+
+Untuk pertanyaan lebih lanjut, hubungi [email@domain.com](mailto:email@domain.com).
+```
+
+Silakan sesuaikan bagian seperti `your_jwt_secret_key` dengan nilai kunci JWT yang sesuai, dan tambahkan informasi tambahan yang relevan dengan proyek Anda.
