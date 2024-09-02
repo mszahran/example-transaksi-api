@@ -36,6 +36,7 @@ Route::prefix('v1/')->group(function () {
         Route::prefix('transaksi/')->group(function () {
             Route::get('count-transaksi', [App\Http\Controllers\Transaksi::class, "countTransaksi"]);
             Route::get('list', [App\Http\Controllers\Transaksi::class, "listTransaksi"]);
+            Route::get('list/order/{column}/{order}', [App\Http\Controllers\Transaksi::class, "orderListTransaksi"]);
             Route::get('no-transaksi/create', [App\Http\Controllers\Transaksi::class, "createNoTransaksi"]);
             Route::post('save', [App\Http\Controllers\Transaksi::class, "saveTransaksi"]);
             Route::delete('cancel/{kodeSales}', [App\Http\Controllers\Transaksi::class, "cancelTransaksi"]);

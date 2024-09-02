@@ -39,7 +39,59 @@ class Transaksi extends Controller
             $transactions = TSalesModel::with(['Customer', 'T_sales_det'])
                 ->withCount('T_sales_det')
                 ->whereNotNull('cust_id')
+                ->orderBy('kode', 'DESC')
                 ->get();
+
+            // Format tanggal dalam data transaksi
+            $formattedTransactions = $transactions->map(function ($transaction) {
+                // Pastikan ada kolom 'tgl' untuk di-format
+                if ($transaction->tgl) {
+                    $date = Carbon::parse($transaction->tgl);
+                    // Format tanggal menjadi `01-Agustus-2024`
+                    $transaction->tgl = $date->translatedFormat('d-F-Y');
+                }
+
+                return $transaction;
+            });
+
+            $data = [
+                'message' => 'Successfully fetching no transaction data.',
+                'data' => $formattedTransactions
+            ];
+
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'message' => 'An error occurred while fetching no transaction.',
+                    'error' => $e->getMessage()
+                ], 500);
+        }
+    }
+
+    public function orderListTransaksi($column = NULL, $order = NULL) 
+    {
+        try {
+            $orderBy = ($order == 'DESC') ? 'sortByDesc' : 'sortBy';
+
+            // Ambil data transaksi
+            $transactions = TSalesModel::with(['Customer', 'T_sales_det'])
+                ->withCount('T_sales_det')
+                ->whereNotNull('cust_id')
+                ->get()
+                ->$orderBy(function ($query) use ($column) {
+                    if ($column == 'customer') {
+                        return $query->Customer->name;
+                    }
+
+                    if ($column == 't_sales_det') {
+                        return $query->T_sales_det;
+                    }
+
+                    if ($column != 'customer' || $column != 't_sales_det') {
+                        return $query->$column;
+                    }
+                })->values();
 
             // Format tanggal dalam data transaksi
             $formattedTransactions = $transactions->map(function ($transaction) {
